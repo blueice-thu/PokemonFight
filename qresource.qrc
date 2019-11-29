@@ -1,0 +1,61 @@
+<RCC>
+    <qresource prefix="/ico">
+        <file>icon.ico</file>
+    </qresource>
+    <qresource prefix="/image/startPage">
+        <file>res/image/startPage/backGround.png</file>
+        <file>res/image/startPage/exitButton.png</file>
+        <file>res/image/startPage/exitButton2.png</file>
+        <file>res/image/startPage/exitButton3.png</file>
+        <file>res/image/startPage/levelsButton.png</file>
+        <file>res/image/startPage/levelsButton2.png</file>
+        <file>res/image/startPage/levelsButton3.png</file>
+        <file>res/image/startPage/settingsButton.png</file>
+        <file>res/image/startPage/settingsButton2.png</file>
+        <file>res/image/startPage/settingsButton3.png</file>
+        <file>res/image/startPage/startButton.png</file>
+        <file>res/image/startPage/startButton2.png</file>
+        <file>res/image/startPage/startButton3.png</file>
+        <file>res/image/startPage/helpButton.png</file>
+        <file>res/image/startPage/helpButton2.png</file>
+        <file>res/image/startPage/helpButton3.png</file>
+    </qresource>
+    <qresource prefix="/image/levelBackground">
+        <file>res/image/level_bridge.jpg</file>
+        <file>res/image/level_city.jpg</file>
+        <file>res/image/level_forest.jpg</file>
+        <file>res/image/level_grass.jpg</file>
+        <file>res/image/level_ice.jpg</file>
+        <file>res/image/level_snow.jpg</file>
+    </qresource>
+    <qresource prefix="/pokemon">
+        <file>res/pokemon/pikachu.gif</file>
+        <file>res/pokemon/squirtle.gif</file>
+        <file>res/pokemon/charmander.gif</file>
+        <file>res/pokemon/bulbasaur.gif</file>
+        <file>res/pokemon/heracross.gif</file>
+        <file>res/pokemon/jigglypuff.gif</file>
+        <file>res/pokemon/jirachi.gif</file>
+        <file>res/pokemon/lugia.gif</file>
+        <file>res/pokemon/luxio.gif</file>
+        <file>res/pokemon/machop.gif</file>
+        <file>res/pokemon/meowth.gif</file>
+        <file>res/pokemon/onix.gif</file>
+        <file>res/pokemon/pangoro.gif</file>
+        <file>res/pokemon/politoed.gif</file>
+        <file>res/pokemon/psyduck.gif</file>
+        <file>res/pokemon/raikou.gif</file>
+        <file>res/pokemon/zweilous.gif</file>
+    </qresource>
+    <qresource prefix="/image/mainGame">
+        <file>res/image/mainGame/musicButton.png</file>
+        <file>res/image/mainGame/musicButton2.png</file>
+        <file>res/image/mainGame/musicButton3.png</file>
+        <file>res/image/mainGame/pauseButton.png</file>
+        <file>res/image/mainGame/pauseButton2.png</file>
+        <file>res/image/mainGame/pauseButton3.png</file>
+        <file>res/image/mainGame/resumeButton.png</file>
+        <file>res/image/mainGame/resumeButton2.png</file>
+        <file>res/image/mainGame/resumeButton3.png</file>
+    </qresource>
+</RCC>
