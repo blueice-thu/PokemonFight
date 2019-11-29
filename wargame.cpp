@@ -74,13 +74,11 @@ void WarGame::initCityStage()
     GameModel* cityStage = new GameModel(this, cityBG, 4000);
     cityStage->prepareGame();
 
-    for (int i = 0; i < 4; i++)
-        for (int j = 0; j < 4; j++)
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++)
             cityStage->addPikachu(cityStage->Blue, 100 + 100 * i, 400 + 100 * j);
-    for (int i = 0; i < 4; i++)
-        for (int j = 0; j < 4; j++)
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++)
             cityStage->addSquirtle(cityStage->Red, 900 + 100 * i, 400 + 100 * j);
     cityStage->startGame();
-//    while (cityStage->checkStatus() == PREPARE)
-//        cityStage->moveToEnemy();
 }

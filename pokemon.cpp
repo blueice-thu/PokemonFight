@@ -1,7 +1,8 @@
 #include "pokemon.h"
 
 Pokemon::Pokemon(SideType newSide, QString newName, QPainter* newPainter,  QMovie* newModel,
-                 qreal newSpeed, int maxHP, int wid, int hgt, int newAbilityPoint)
+                 qreal newSpeed, int wid, int hgt,
+                 int maxHP, int newAbilityPoint, int newAttackAbility)
 {
     setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
 
@@ -10,14 +11,19 @@ Pokemon::Pokemon(SideType newSide, QString newName, QPainter* newPainter,  QMovi
         direct = RIGHT;
     else
         direct = LEFT;
-    pWidth = wid;
-    pHeight = hgt;
-    name = newName;
+
     painter = newPainter;
     model = newModel;
-    speed = newSpeed / 10.0;
+    pWidth = wid;
+    pHeight = hgt;
+
+    name = newName;
+
     HP = maxHP;
+    speed = newSpeed / 10.0;
     abilityPoint = newAbilityPoint;
+    attackAbility = newAttackAbility;
+
     state = STOP;
     model->start();
 
@@ -54,23 +60,22 @@ QPainterPath Pokemon::shape() const
     path.addRect(QRectF(-pWidth / 2, -pHeight / 2, pWidth, pHeight));
     return path;
 }
-void Pokemon::moveTo(int x, int y)
+void Pokemon::moveTo(qreal x, qreal y)
 {
-    stop();
-    state = MOVE;
-    qreal distance = sqrt(pow(x - this->x(), 2) + pow(x - this->y(), 2));
-    if (x - this->x() > 0)
+    if (state != MOVE)
+        return;
+    qreal deltaX = x - this->x();
+    qreal deltaY = y - this->y();
+    qreal dis2 = sqrt(deltaX * deltaX + deltaY * deltaY);
+    if (dis2 < 40)
+        return;
+    if (deltaX > 0)
         direct = RIGHT;
     else
         direct = LEFT;
-    int timeLength = static_cast<int>(distance / speed);
-    if (timeLine)
-        delete timeLine;
-    timeLine = new QTimeLine(timeLength);
-    timeLine->setCurveShape(QTimeLine::EaseInOutCurve);
-    animation->setTimeLine(timeLine);
-    animation->setTranslationAt(1, x - this->x(), y - this->y());
-    timeLine->start();
+    qreal dx = this->x() + speed * deltaX / dis2 * 25;
+    qreal dy = this->y() + speed * deltaY / dis2 * 25;
+    this->setPos(QPointF(dx, dy));
 }
 void Pokemon::moveTo(QPointF point)
 {
@@ -78,11 +83,9 @@ void Pokemon::moveTo(QPointF point)
 }
 void Pokemon::stop()
 {
-    setPos(this->pos());
-//    if (timeLine)
-//        timeLine->stop();
-//    if (animation)
-//    {
-//        animation->clear();
-//    }
+    state = STOP;
+}
+void Pokemon::setState(UnitState newState)
+{
+    state = newState;
 }

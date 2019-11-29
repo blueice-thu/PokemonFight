@@ -24,28 +24,32 @@ class Pokemon : public QObject, public QGraphicsItem
 public:
     explicit Pokemon(QWidget *parent = nullptr);
     Pokemon(SideType newSide, QString newName, QPainter* newPainter,  QMovie* newModel,
-                     qreal newSpeed, int maxHP, int wid, int hgt, int newAbilityPoint);
+                     qreal newSpeed, int wid, int hgt, int maxHP, int newAbilityPoint, int newAttackAbility);
     ~Pokemon();
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QRectF boundingRect() const;
     QPainterPath shape() const;
 
-    void moveTo(int x, int y);
+    void moveTo(qreal x, qreal y);
     void moveTo(QPointF point);
     void stop();
+    void setState(UnitState newState);
 
 private:
     int pWidth, pHeight;
     QString name;
     QPainter* painter;
     QMovie* model;
-    qreal speed;
+    SideType side;
+
     int HP;
+    qreal speed;
+    int abilityPoint;
+    int attackAbility;
+
     Direction direct;
     UnitState state;
-    SideType side;
-    int abilityPoint;
 
     QGraphicsItemAnimation* animation;
     QTimeLine* timeLine;

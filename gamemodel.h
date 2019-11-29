@@ -32,8 +32,9 @@ public:
 
     void prepareGame();
     void startGame();
-    void gameWin();
-    void gameDefeat();
+    void winGame();
+    void defeatGame();
+    void checkWinDeafet();
     GameStatus checkStatus();
 
     void addPikachu(Side &side, int x, int y);
