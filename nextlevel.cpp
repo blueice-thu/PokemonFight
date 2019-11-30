@@ -7,8 +7,19 @@ NextLevel::NextLevel(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowModality(Qt::ApplicationModal);
-//    setWindowFlags(Qt::CustomizeWindowHint);
-//    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::CustomizeWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint);
+
+    ui->restartButton->setStyleSheet("QPushButton{border-image: url(:/image/otherButton/res/image/otherButton/restartButton.png);}"
+                                  "QPushButton:hover{border-image: url(:/image/otherButton/res/image/otherButton/restartButton2.png);}"
+                                  "QPushButton:pressed{border-image: url(:/image/otherButton/res/image/otherButton/restartButton3.png);}");
+    ui->nextButton->setStyleSheet("QPushButton{border-image: url(:/image/otherButton/res/image/otherButton/nextButton.png);}"
+                                  "QPushButton:hover{border-image: url(:/image/otherButton/res/image/otherButton/nextButton2.png);}"
+                                  "QPushButton:pressed{border-image: url(:/image/otherButton/res/image/otherButton/nextButton3.png);}");
+    ui->quitButton->setStyleSheet("QPushButton{border-image: url(:/image/otherButton/res/image/otherButton/quitButton.png);}"
+                                  "QPushButton:hover{border-image: url(:/image/otherButton/res/image/otherButton/quitButton2.png);}"
+                                  "QPushButton:pressed{border-image: url(:/image/otherButton/res/image/otherButton/quitButton3.png);}");
+    move(400, 400);
 }
 
 NextLevel::~NextLevel()
@@ -19,7 +30,6 @@ NextLevel::~NextLevel()
 void NextLevel::on_quitButton_pressed()
 {
     emit quit();
-    this->close();
 }
 
 void NextLevel::on_nextButton_pressed()

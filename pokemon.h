@@ -14,7 +14,7 @@
 #include <math.h>
 #include <QDebug>
 
-enum UnitState { STOP, MOVE, ATTACK, AFRAID, TORPID, DEAD };
+enum UnitState { STOP, MOVE, ATTACK };
 enum SideType { RedSide, BlueSide };
 enum Direction { LEFT, RIGHT };
 class Pokemon : public QObject, public QGraphicsItem
@@ -24,7 +24,8 @@ class Pokemon : public QObject, public QGraphicsItem
 public:
     explicit Pokemon(QWidget *parent = nullptr);
     Pokemon(SideType newSide, QString newName, QPainter* newPainter,  QMovie* newModel,
-                     qreal newSpeed, int wid, int hgt, int maxHP, int newAbilityPoint, int newAttackAbility);
+            qreal newSpeed, int wid, int hgt, int maxHP, int newAbilityPoint, int newAttackAbility,
+            qreal newAttackSpeed, int newAttackDistance);
     ~Pokemon();
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -36,6 +37,7 @@ public:
     void moveTo(QPointF point);
     void stop();
     void setState(UnitState newState);
+    UnitState getState();
 
     int getHp();
 
@@ -50,6 +52,8 @@ private:
     qreal speed;
     int abilityPoint;
     int attackAbility;
+    qreal attackSpeed;
+    int attackDistance;
 
     Direction direct;
     UnitState state;

@@ -11,8 +11,7 @@ WarGame::WarGame(QWidget *parent) :
     setWindowTitle("WarGame");
     setWindowIcon(QIcon(":/ico/icon.ico"));
 
-    QDesktopWidget *deskdop=QApplication::desktop();
-        move((deskdop->width()-this->width())/2, (deskdop->height()-this->height())/2);
+    move ((QApplication::desktop()->width() - this->width())/2,(QApplication::desktop()->height() - this->height())/2);
 
     QPixmap pixmap = QPixmap(":/image/startPage/res/image/startPage/backGround.png").scaled(this->size());
     QPalette palette(this->palette());
@@ -36,6 +35,7 @@ WarGame::WarGame(QWidget *parent) :
                                   "QPushButton:pressed{border-image: url(:/image/startPage/res/image/startPage/exitButton3.png);}");
 
     stage = nullptr;
+    next = nullptr;
 }
 
 WarGame::~WarGame()
@@ -43,22 +43,24 @@ WarGame::~WarGame()
     delete ui;
     if (stage)
         delete stage;
+    if (next)
+        delete next;
 }
 void WarGame::closeEvent(QCloseEvent *event)
 {
-//    int choose;
-//    choose = QMessageBox::question(this, tr("退出游戏"),
-//                                   QString(tr("确认退出游戏?")),
-//                                   QMessageBox::Yes | QMessageBox::No);
+    int choose;
+    choose = QMessageBox::question(this, tr("退出游戏"),
+                                   QString(tr("确认退出游戏?")),
+                                   QMessageBox::Yes | QMessageBox::No);
 
-//    if (choose== QMessageBox::No)
-//    {
-//          event->ignore();
-//    }
-//    else if (choose== QMessageBox::Yes)
-//    {
+    if (choose== QMessageBox::No)
+    {
+          event->ignore();
+    }
+    else if (choose== QMessageBox::Yes)
+    {
           event->accept();
-//    }
+    }
 }
 
 
@@ -74,14 +76,25 @@ void WarGame::on_startButton_clicked()
 }
 void WarGame::win_stage()
 {
-    NextLevel* next = new NextLevel(this);
+    next = new NextLevel(this);
     connect(next, SIGNAL(quit()), this, SLOT(quit_to_main()));
+    connect(next, SIGNAL(restart()), this, SLOT(restart_stage()));
+    connect(next, SIGNAL(next), this, SLOT(next_stage()));
     next->show();
 }
 void WarGame::quit_to_main()
 {
     if (stage)
+    {
         delete stage;
+        stage = nullptr;
+    }
+    if (next)
+    {
+        next->close();
+        delete next;
+        next = nullptr;
+    }
     ui->startButton->setVisible(true);
     ui->levelsButton->setVisible(true);
     ui->settingsButton->setVisible(true);
@@ -93,19 +106,46 @@ void WarGame::quit_to_main()
     palette.setBrush(backgroundRole(), QBrush(pixmap));
     setPalette(palette);
 }
+void WarGame::restart_stage()
+{
+    if (stage)
+    {
+        delete stage;
+        stage = nullptr;
+    }
+    if (next)
+    {
+        next->close();
+        delete next;
+        next = nullptr;
+    }
+    if (current_stage == 1)
+        initCityStage();
+}
+void WarGame::next_stage()
+{
+    //TODO
+}
 void WarGame::initCityStage()
 {
+    current_stage = 1;
+
+
     QPixmap cityBG = QPixmap(":/image/levelBackground/res/image/level_city.jpg").scaled(this->size());
     stage = new GameModel(this, cityBG, 4000);
     connect(stage, SIGNAL(win()), this, SLOT(win_stage()));
     stage->prepareGame();
 
+//    for (int i = 0; i < 2; i++)
+//        for (int j = 0; j < 2; j++)
+//            stage->addPikachu(stage->Blue, 100 + 100 * i, 400 + 100 * j);
+//    for (int i = 0; i < 2; i++)
+//        for (int j = 0; j < 2; j++)
+//            stage->addSquirtle(stage->Red, 900 + 100 * i, 400 + 100 * j);
     for (int i = 0; i < 2; i++)
-        for (int j = 0; j < 2; j++)
-            stage->addPikachu(stage->Blue, 100 + 100 * i, 400 + 100 * j);
+        stage->addPikachu(stage->Blue, 100 + 100 * i, 400 + 100 * i);
     for (int i = 0; i < 2; i++)
-        for (int j = 0; j < 2; j++)
-            stage->addSquirtle(stage->Red, 900 + 100 * i, 400 + 100 * j);
+        stage->addSquirtle(stage->Red, 900 + 100 * i, 400 + 100 * i);
     stage->prepareGame();
     stage->startGame();
 }

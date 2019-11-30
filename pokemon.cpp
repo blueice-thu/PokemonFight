@@ -2,7 +2,8 @@
 
 Pokemon::Pokemon(SideType newSide, QString newName, QPainter* newPainter,  QMovie* newModel,
                  qreal newSpeed, int wid, int hgt,
-                 int maxHP, int newAbilityPoint, int newAttackAbility)
+                 int maxHP, int newAbilityPoint, int newAttackAbility,
+                 qreal newAttackSpeed, int newAttackDistance)
 {
     setFlags(QGraphicsItem::ItemSendsGeometryChanges);
 
@@ -28,6 +29,8 @@ Pokemon::Pokemon(SideType newSide, QString newName, QPainter* newPainter,  QMovi
     speed = newSpeed / 10.0;
     abilityPoint = newAbilityPoint;
     attackAbility = newAttackAbility;
+    attackSpeed = newAttackSpeed;
+    attackDistance = newAttackDistance;
 
     state = STOP;
     model->start();
@@ -39,6 +42,10 @@ Pokemon::~Pokemon()
         delete model;
     if (painter)
         delete painter;
+}
+UnitState Pokemon::getState()
+{
+    return state;
 }
 void Pokemon::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
@@ -62,12 +69,19 @@ QPainterPath Pokemon::shape() const
 }
 void Pokemon::moveTo(qreal x, qreal y)
 {
-    if (state != MOVE)
-        return;
     qreal deltaX = x - this->x();
     qreal deltaY = y - this->y();
     qreal dis2 = sqrt(deltaX * deltaX + deltaY * deltaY);
-    if (dis2 < 40)
+    if (dis2 < attackDistance)
+    {
+        state = ATTACK;
+        return;
+    }
+    else
+    {
+        state = MOVE;
+    }
+    if (state != MOVE)
         return;
     if (deltaX > 0)
         direct = RIGHT;

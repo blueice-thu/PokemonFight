@@ -2,6 +2,8 @@
 #define NEXTLEVEL_H
 
 #include <QDialog>
+#include <QDesktopWidget>
+#include <QApplication>
 
 namespace Ui {
 class NextLevel;

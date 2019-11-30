@@ -31,6 +31,10 @@ public:
     ~GameModel();
     void wheelEvent(QWheelEvent *event);
 
+    Pokemon* getEnemy(Pokemon* me, Side &yourSide);
+    void moveToEnemy();
+    void attackEnemy(Pokemon* attacker, Pokemon* attacked);
+
     void prepareGame();
     void startGame();
     void checkWinDefeat();
@@ -40,8 +44,6 @@ public:
     void addPikachu(Side &side, int x, int y);
     void addSquirtle(Side &side, int x, int y);
     void addCharmander(Side &side, int x, int y);
-    QPointF getEnemyPos(Pokemon* me, Side &yourSide);
-    void moveToEnemy();
 
     Side Red, Blue;
 signals:
