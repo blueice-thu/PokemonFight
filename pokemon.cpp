@@ -4,13 +4,18 @@ Pokemon::Pokemon(SideType newSide, QString newName, QPainter* newPainter,  QMovi
                  qreal newSpeed, int wid, int hgt,
                  int maxHP, int newAbilityPoint, int newAttackAbility)
 {
-    setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
+    setFlags(QGraphicsItem::ItemSendsGeometryChanges);
 
     side = newSide;
     if (side == BlueSide)
+    {
         direct = RIGHT;
+    }
     else
+    {
         direct = LEFT;
+        setFlags(QGraphicsItem::ItemIsMovable);
+    }
 
     painter = newPainter;
     model = newModel;
@@ -27,18 +32,13 @@ Pokemon::Pokemon(SideType newSide, QString newName, QPainter* newPainter,  QMovi
     state = STOP;
     model->start();
 
-    animation = new QGraphicsItemAnimation;
-    animation->setItem(this);
-    timeLine = nullptr;
 }
 Pokemon::~Pokemon()
 {
     if (model)
         delete model;
-    if (animation)
-        delete animation;
-    if (timeLine)
-        delete timeLine;
+    if (painter)
+        delete painter;
 }
 void Pokemon::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
@@ -85,7 +85,26 @@ void Pokemon::stop()
 {
     state = STOP;
 }
+//QVariant Pokemon::itemChange(GraphicsItemChange change, const QVariant &value)
+//{
+//    if (change == ItemPositionChange && scene()) {
+//        // value is the new position.
+//        QPointF newPos = value.toPointF();
+//        QRectF rect = scene()->sceneRect();
+//        if (!rect.contains(newPos)) {
+//            // Keep the item inside the scene rect.
+//            newPos.setX(qMin(rect.right(), qMax(newPos.x(), rect.left())));
+//            newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
+//            return newPos;
+//        }
+//    }
+//    return QGraphicsItem::itemChange(change, value);
+//}
 void Pokemon::setState(UnitState newState)
 {
     state = newState;
+}
+int Pokemon::getHp()
+{
+    return HP;
 }

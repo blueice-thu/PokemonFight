@@ -58,4 +58,15 @@
         <file>res/image/mainGame/resumeButton2.png</file>
         <file>res/image/mainGame/resumeButton3.png</file>
     </qresource>
+    <qresource prefix="/image/otherButton">
+        <file>res/image/otherButton/nextButton.png</file>
+        <file>res/image/otherButton/nextButton2.png</file>
+        <file>res/image/otherButton/nextButton3.png</file>
+        <file>res/image/otherButton/quitButton.png</file>
+        <file>res/image/otherButton/quitButton2.png</file>
+        <file>res/image/otherButton/quitButton3.png</file>
+        <file>res/image/otherButton/restartButton.png</file>
+        <file>res/image/otherButton/restartButton2.png</file>
+        <file>res/image/otherButton/restartButton3.png</file>
+    </qresource>
 </RCC>

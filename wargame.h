@@ -25,9 +25,12 @@ public:
 
 private slots:
     void on_startButton_clicked();
+    void win_stage();
+    void quit_to_main();
 
 private:
     Ui::WarGame *ui;
+    GameModel* stage;
 };
 
 #endif // WARGAME_H

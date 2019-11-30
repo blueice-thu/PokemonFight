@@ -2,6 +2,7 @@
 #define GAMEMODEL_H
 
 #include "pokemon.h"
+#include "nextlevel.h"
 #include <vector>
 #include <QString>
 #include <QDebug>
@@ -32,9 +33,8 @@ public:
 
     void prepareGame();
     void startGame();
-    void winGame();
-    void defeatGame();
-    void checkWinDeafet();
+    void checkWinDefeat();
+    void killPokemon();
     GameStatus checkStatus();
 
     void addPikachu(Side &side, int x, int y);
@@ -44,6 +44,9 @@ public:
     void moveToEnemy();
 
     Side Red, Blue;
+signals:
+    void win();
+    void defeat();
 public slots:
     void onCheckGameStatus();
 private:

@@ -34,19 +34,31 @@ void GameModel::prepareGame()
 }
 void GameModel::startGame()
 {
+    if (Red.live_pokemon == 0)
+        return;
     status = PLAYING;
     gameTimer->start(30);
     for (int i = 0; i < Blue.live_pokemon; i++)
         Blue.units[i]->setState(MOVE);
     for (int i = 0; i < Red.live_pokemon; i++)
+    {
         Red.units[i]->setState(MOVE);
+        Red.units[i]->setFlags(QGraphicsItem::ItemIsMovable);
+    }
 }
-void GameModel::checkWinDeafet()
+void GameModel::checkWinDefeat()
 {
     if (Blue.live_pokemon == 0)
-        winGame();
+//    if (1)
+    {
+        emit win();
+        gameTimer->stop();
+    }
     else if (Red.live_pokemon == 0)
-        defeatGame();
+    {
+        emit defeat();
+        gameTimer->stop();
+    }
 }
 GameStatus GameModel::checkStatus()
 {
@@ -54,7 +66,6 @@ GameStatus GameModel::checkStatus()
 }
 void GameModel::wheelEvent(QWheelEvent *event)
 {
-//    status = PLAYING;
     if (status != PLAYING)
         return;
     // 获取当前鼠标相对于view的位置;
@@ -127,12 +138,38 @@ void GameModel::moveToEnemy()
         Red.units[i]->moveTo(enemyPos);
     }
 }
+void GameModel::killPokemon()
+{
+    for (int i = 0; i < Blue.live_pokemon; i++)
+    {
+        if (Blue.units[i]->getHp() <= 0)
+        {
+            scene->removeItem(Blue.units[i]);
+            Pokemon* temp = Blue.units[i];
+            Blue.units.erase(std::begin(Blue.units) + i);
+            delete temp;
+            Blue.live_pokemon--;
+        }
+    }
+    for (int i = 0; i < Red.live_pokemon; i++)
+    {
+        if (Red.units[i]->getHp() <= 0)
+        {
+            scene->removeItem(Red.units[i]);
+            Pokemon* temp = Red.units[i];
+            Red.units.erase(std::begin(Red.units) + i);
+            delete temp;
+            Red.live_pokemon--;
+        }
+    }
+}
 void GameModel::onCheckGameStatus()
 {
     if (status == PLAYING)
     {
-        checkWinDeafet();
+        checkWinDefeat();
         moveToEnemy();
+        killPokemon();
     }
 }
 void GameModel::addPikachu(Side &side, int x, int y)

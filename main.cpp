@@ -1,4 +1,5 @@
 #include "wargame.h"
+#include "nextlevel.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
