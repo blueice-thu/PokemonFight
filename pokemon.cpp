@@ -122,3 +122,11 @@ int Pokemon::getHp()
 {
     return HP;
 }
+void Pokemon::cutHp(int cut)
+{
+    HP = HP - cut;
+}
+int Pokemon::getAttackAbility()
+{
+    return attackAbility;
+}

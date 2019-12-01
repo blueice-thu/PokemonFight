@@ -41,3 +41,11 @@ void NextLevel::on_restartButton_pressed()
 {
     emit restart();
 }
+//void NextLevel::setLableText(QString text)
+//{
+//    ui->label->setText(text);
+//}
+//void NextLevel::setNextVisble(bool vis)
+//{
+//    ui->nextButton->setVisible(vis);
+//}

@@ -27,6 +27,28 @@ GameModel::~GameModel()
 {
     delete scene;
     delete gameTimer;
+//    size_t i = 0;
+//    while (i < Red.units.size())
+//    {
+//        delete (Red.units[i]);
+//        i++;
+//    }
+//    i = 0;
+//    while (i < Blue.units.size())
+//    {
+//        delete (Blue.units[i]);
+//        i++;
+//    }
+//    while (!Red.units.empty())
+//    {
+//        delete Red.units.back();
+//        Red.units.pop_back();
+//    }
+//    while (!Blue.units.empty())
+//    {
+//        delete Blue.units.back();
+//        Blue.units.pop_back();
+//    }
 }
 void GameModel::prepareGame()
 {
@@ -38,9 +60,9 @@ void GameModel::startGame()
         return;
     status = PLAYING;
     gameTimer->start(30);
-    for (int i = 0; i < Blue.live_pokemon; i++)
+    for (size_t i = 0; i < Blue.live_pokemon; i++)
         Blue.units[i]->setState(MOVE);
-    for (int i = 0; i < Red.live_pokemon; i++)
+    for (size_t i = 0; i < Red.live_pokemon; i++)
     {
         Red.units[i]->setState(MOVE);
         Red.units[i]->setFlags(QGraphicsItem::ItemIsMovable);
@@ -48,15 +70,16 @@ void GameModel::startGame()
 }
 void GameModel::checkWinDefeat()
 {
-    if (Blue.live_pokemon == 0)
+    if (Blue.live_pokemon <= 0)
+//    if (true)
     {
+        gameTimer->stop();
         emit win();
-        gameTimer->stop();
     }
-    else if (Red.live_pokemon == 0)
+    else if (Red.live_pokemon <= 0)
     {
-        emit defeat();
         gameTimer->stop();
+        emit defeat();
     }
 }
 GameStatus GameModel::checkStatus()
@@ -112,7 +135,8 @@ Pokemon* GameModel::getEnemy(Pokemon* me, Side &yourSide)
     qreal thisDistance2 = 0.0;
     int k = 0;
     int yourNumber = yourSide.units.size();
-    for (int i = 0; i < yourNumber; i++)
+    int i = 0;
+    while (i < yourNumber)
     {
         thisDistance2 = pow(me->pos().x() - yourSide.units[i]->pos().x(), 2)
                 + pow(me->pos().y() - yourSide.units[i]->pos().y(), 2);
@@ -121,14 +145,16 @@ Pokemon* GameModel::getEnemy(Pokemon* me, Side &yourSide)
             minDistance2 = thisDistance2;
             k = i;
         }
+        i++;
     }
     return (yourSide.units[k]);
 }
 void GameModel::moveToEnemy()
 {
-    for (int i = 0; i < Blue.live_pokemon; i++)
+    for (size_t i = 0; i < Blue.live_pokemon; i++)
     {
         Pokemon* enemy = getEnemy(Blue.units[i], Red);
+        qDebug() << enemy->getHp();
         QPointF enemyPos = enemy->pos();
         Blue.units[i]->moveTo(enemyPos);
         if (Blue.units[i]->getState() == ATTACK)
@@ -136,7 +162,7 @@ void GameModel::moveToEnemy()
             attackEnemy(Blue.units[i], enemy);
         }
     }
-    for (int i = 0; i < Red.live_pokemon; i++)
+    for (size_t i = 0; i < Red.live_pokemon; i++)
     {
         Pokemon* enemy = getEnemy(Red.units[i], Blue);
         QPointF enemyPos = enemy->pos();
@@ -149,7 +175,7 @@ void GameModel::moveToEnemy()
 }
 void GameModel::killPokemon()
 {
-    for (int i = 0; i < Blue.live_pokemon; i++)
+    for (size_t i = 0; i < Blue.live_pokemon; i++)
     {
         if (Blue.units[i]->getHp() <= 0)
         {
@@ -160,7 +186,7 @@ void GameModel::killPokemon()
             Blue.live_pokemon--;
         }
     }
-    for (int i = 0; i < Red.live_pokemon; i++)
+    for (size_t i = 0; i < Red.live_pokemon; i++)
     {
         if (Red.units[i]->getHp() <= 0)
         {
@@ -174,15 +200,15 @@ void GameModel::killPokemon()
 }
 void GameModel::attackEnemy(Pokemon* attacker, Pokemon* attacked)
 {
-    //TODO
+    attacked->cutHp(attacker->getAttackAbility());
 }
 void GameModel::onCheckGameStatus()
 {
     if (status == PLAYING)
     {
         checkWinDefeat();
-        moveToEnemy();
         killPokemon();
+        moveToEnemy();
     }
 }
 void GameModel::addPikachu(Side &side, int x, int y)

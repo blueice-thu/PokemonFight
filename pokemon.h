@@ -40,6 +40,8 @@ public:
     UnitState getState();
 
     int getHp();
+    void cutHp(int cut);
+    int getAttackAbility();
 
 private:
     int pWidth, pHeight;

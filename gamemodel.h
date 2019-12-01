@@ -2,7 +2,6 @@
 #define GAMEMODEL_H
 
 #include "pokemon.h"
-#include "nextlevel.h"
 #include <vector>
 #include <QString>
 #include <QDebug>

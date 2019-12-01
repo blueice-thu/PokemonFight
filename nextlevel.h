@@ -20,6 +20,8 @@ signals:
     void quit();
     void next();
     void restart();
+//    void setLableText(QString text);
+//    void setNextVisble(bool vis);
 private slots:
     void on_quitButton_pressed();
 
