@@ -22,6 +22,7 @@ GameModel::GameModel(QMainWindow* window, QPixmap& background, int maxPoint) :
     this->setScene(scene);
     scene->addPixmap(background);
     this->show();
+    setFocus();
 }
 GameModel::~GameModel()
 {
@@ -68,10 +69,19 @@ void GameModel::startGame()
         Red.units[i]->setFlags(QGraphicsItem::ItemIsMovable);
     }
 }
+void GameModel::pauseGame()
+{
+    status = PAUSE;
+    gameTimer->stop();
+}
+void GameModel::continueGame()
+{
+    status = PLAYING;
+    gameTimer->start(30);
+}
 void GameModel::checkWinDefeat()
 {
     if (Blue.live_pokemon <= 0)
-//    if (true)
     {
         gameTimer->stop();
         emit win();
@@ -128,14 +138,42 @@ void GameModel::wheelEvent(QWheelEvent *event)
     this->horizontalScrollBar()->setValue(int(viewPoint.x() - viewWidth * hScale));
     this->verticalScrollBar()->setValue(int(viewPoint.y() - viewHeight * vScale));
 }
-
+void GameModel::keyPressEvent(QKeyEvent *event)
+{
+    if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_X)
+    {
+        // Make HP MAX!
+        size_t i = 0;
+        while (i < Red.live_pokemon)
+        {
+            if (Red.units[i]->getHp() < 1000000)
+                Red.units[i]->cutHp(-1000000);
+            i++;
+        }
+        QWidget::keyPressEvent(event);
+        return;
+    }
+    switch(event->key())
+    {
+        case Qt::Key_Escape:
+            if (status == PLAYING)
+                emit pause();
+            break;
+        default:
+            QWidget::keyPressEvent(event);
+    }
+}
 Pokemon* GameModel::getEnemy(Pokemon* me, Side &yourSide)
 {
+    size_t yourNumber = yourSide.units.size();
+    if (yourNumber == 0)
+    {
+        return nullptr;
+    }
     qreal minDistance2 = 10000000;
     qreal thisDistance2 = 0.0;
-    int k = 0;
-    int yourNumber = yourSide.units.size();
-    int i = 0;
+    size_t k = 0;
+    size_t i = 0;
     while (i < yourNumber)
     {
         thisDistance2 = pow(me->pos().x() - yourSide.units[i]->pos().x(), 2)
@@ -154,7 +192,11 @@ void GameModel::moveToEnemy()
     for (size_t i = 0; i < Blue.live_pokemon; i++)
     {
         Pokemon* enemy = getEnemy(Blue.units[i], Red);
-        qDebug() << enemy->getHp();
+        if (enemy == nullptr)
+        {
+            emit defeat();
+            return;
+        }
         QPointF enemyPos = enemy->pos();
         Blue.units[i]->moveTo(enemyPos);
         if (Blue.units[i]->getState() == ATTACK)
@@ -165,6 +207,11 @@ void GameModel::moveToEnemy()
     for (size_t i = 0; i < Red.live_pokemon; i++)
     {
         Pokemon* enemy = getEnemy(Red.units[i], Blue);
+        if (enemy == nullptr)
+        {
+            emit win();
+            return;
+        }
         QPointF enemyPos = enemy->pos();
         Red.units[i]->moveTo(enemyPos);
         if (Red.units[i]->getState() == ATTACK)
@@ -211,6 +258,127 @@ void GameModel::onCheckGameStatus()
         moveToEnemy();
     }
 }
+void GameModel::addCharmander(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/charmander.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
+}
+void GameModel::addBulbasaur(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/bulbasaur.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
+}
+void GameModel::addHeracross(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/heracross.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
+}
+void GameModel::addJigglypuff(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/jigglypuff.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
+}
+void GameModel::addJirachi(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/jirachi.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
+}
+void GameModel::addLugia(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/lugia.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
+}
+void GameModel::addLuxio(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/luxio.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
+}
+void GameModel::addMachop(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/machop.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
+}
+void GameModel::addMeowth(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/meowth.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
+}
+void GameModel::addOnix(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/onix.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
+}
+void GameModel::addPangoro(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/pangoro.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
+}
 void GameModel::addPikachu(Side &side, int x, int y)
 {
     QPainter* p = new QPainter(this);
@@ -221,6 +389,39 @@ void GameModel::addPikachu(Side &side, int x, int y)
 
     this->scene->addItem(pikachu);
     pikachu->setPos(x, y);
+}
+void GameModel::addPolitoed(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/politoed.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
+}
+void GameModel::addPsyduck(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/psyduck.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
+}
+void GameModel::addRaikou(Side &side, int x, int y)
+{
+    QPainter* p = new QPainter(this);
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/raikou.gif");
+    Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
+    side.units.push_back(charmander);
+    side.live_pokemon++;
+
+    this->scene->addItem(charmander);
+    charmander->setPos(x, y);
 }
 void GameModel::addSquirtle(Side &side, int x, int y)
 {
@@ -233,10 +434,10 @@ void GameModel::addSquirtle(Side &side, int x, int y)
     this->scene->addItem(squirtle);
     squirtle->setPos(x, y);
 }
-void GameModel::addCharmander(Side &side, int x, int y)
+void GameModel::addZweilous(Side &side, int x, int y)
 {
     QPainter* p = new QPainter(this);
-    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/charmander.gif");
+    QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/zweilous.gif");
     Pokemon* charmander = new Pokemon(side.type, "Squirtle", p, pMovie, 0.5, 48, 57, 50, 200, 30, 4, 60);
     side.units.push_back(charmander);
     side.live_pokemon++;

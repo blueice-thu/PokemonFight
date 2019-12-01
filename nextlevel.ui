@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>594</width>
-    <height>170</height>
+    <width>991</width>
+    <height>596</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>594</width>
-    <height>170</height>
+    <width>991</width>
+    <height>596</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>594</width>
-    <height>170</height>
+    <width>991</width>
+    <height>596</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -36,8 +36,11 @@
          <pointsize>19</pointsize>
         </font>
        </property>
-       <property name="text">
-        <string>Congratulations! You WIN!</string>
+       <property name="pixmap">
+        <pixmap resource="qresource.qrc">:/image/res/image/Win.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>false</bool>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -52,7 +55,7 @@
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>5</height>
+         <height>40</height>
         </size>
        </property>
       </spacer>
@@ -75,6 +78,28 @@
          </property>
          <property name="styleSheet">
           <string notr="true">border-image: url(:/image/otherButton/res/image/otherButton/restartButton.png);</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="resumeButton">
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>83</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>180</width>
+           <height>83</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border-image: url(:/image/mainGame/res/image/mainGame/resumeButton.png);</string>
          </property>
          <property name="text">
           <string/>
@@ -131,6 +156,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="qresource.qrc"/>
+ </resources>
  <connections/>
 </ui>

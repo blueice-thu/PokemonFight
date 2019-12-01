@@ -36,18 +36,37 @@ public:
 
     void prepareGame();
     void startGame();
+    void pauseGame();
+    void continueGame();
     void checkWinDefeat();
     void killPokemon();
     GameStatus checkStatus();
 
-    void addPikachu(Side &side, int x, int y);
-    void addSquirtle(Side &side, int x, int y);
     void addCharmander(Side &side, int x, int y);
+    void addBulbasaur(Side &side, int x, int y);
+    void addHeracross(Side &side, int x, int y);
+    void addJigglypuff(Side &side, int x, int y);
+    void addJirachi(Side &side, int x, int y);
+    void addLugia(Side &side, int x, int y);
+    void addLuxio(Side &side, int x, int y);
+    void addMachop(Side &side, int x, int y);
+    void addMeowth(Side &side, int x, int y);
+    void addOnix(Side &side, int x, int y);
+    void addPangoro(Side &side, int x, int y);
+    void addPikachu(Side &side, int x, int y);
+    void addPolitoed(Side &side, int x, int y);
+    void addPsyduck(Side &side, int x, int y);
+    void addRaikou(Side &side, int x, int y);
+    void addSquirtle(Side &side, int x, int y);
+    void addZweilous(Side &side, int x, int y);
+
+    void keyPressEvent(QKeyEvent *event);
 
     Side Red, Blue;
 signals:
     void win();
     void defeat();
+    void pause();
 public slots:
     void onCheckGameStatus();
 private:

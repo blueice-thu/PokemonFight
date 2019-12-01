@@ -35,6 +35,8 @@ private slots:
     void defeat_stage();
     void restart_stage();
     void next_stage();
+    void pause_stage();
+    void resume_stage();
     void quit_to_main();
 
 private:

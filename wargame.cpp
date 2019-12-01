@@ -8,7 +8,7 @@ WarGame::WarGame(QWidget *parent) :
     ui->setupUi(this);
 
     setFixedSize(1365, 980);
-    setWindowTitle("WarGame");
+    setWindowTitle("Pokemon Fight");
     setWindowIcon(QIcon(":/ico/icon.ico"));
 
     move ((QApplication::desktop()->width() - this->width())/2,(QApplication::desktop()->height() - this->height())/2);
@@ -24,6 +24,7 @@ WarGame::WarGame(QWidget *parent) :
     ui->levelsButton->setStyleSheet("QPushButton{border-image: url(:/image/startPage/res/image/startPage/levelsButton.png);}"
                                   "QPushButton:hover{border-image: url(:/image/startPage/res/image/startPage/levelsButton2.png);}"
                                   "QPushButton:pressed{border-image: url(:/image/startPage/res/image/startPage/levelsButton3.png);}");
+    ui->levelsButton->setVisible(false);
     ui->settingsButton->setStyleSheet("QPushButton{border-image: url(:/image/startPage/res/image/startPage/settingsButton.png);}"
                                   "QPushButton:hover{border-image: url(:/image/startPage/res/image/startPage/settingsButton2.png);}"
                                   "QPushButton:pressed{border-image: url(:/image/startPage/res/image/startPage/settingsButton3.png);}");
@@ -78,22 +79,49 @@ void WarGame::win_stage()
     connect(next, SIGNAL(quit()), this, SLOT(quit_to_main()));
     connect(next, SIGNAL(restart()), this, SLOT(restart_stage()));
     connect(next, SIGNAL(next()), this, SLOT(next_stage()));
-    next->show();
+    next->setResumeVisble(false);
+    next->exec();
 }
 void WarGame::defeat_stage()
 {
     next = new NextLevel(this);
-//    next->setLableText("Defeat!");
+    next->setLablePic(":/image/res/image/Defeat.png");
+
 //    next->setNextVisble(false);
+    connect(next, SIGNAL(next()), this, SLOT(next_stage()));
+
+
+    next->setResumeVisble(false);
     connect(next, SIGNAL(quit()), this, SLOT(quit_to_main()));
     connect(next, SIGNAL(restart()), this, SLOT(restart_stage()));
-    connect(next, SIGNAL(next()), this, SLOT(next_stage()));
-    next->show();
+    next->exec();
+}
+void WarGame::pause_stage()
+{
+    stage->pauseGame();
+    next = new NextLevel(this);
+    next->setLablePic(":/image/res/image/Pause.png");
+    next->setNextVisble(false);
+    connect(next, SIGNAL(quit()), this, SLOT(quit_to_main()));
+    connect(next, SIGNAL(restart()), this, SLOT(restart_stage()));
+    connect(next, SIGNAL(resume()), this, SLOT(resume_stage()));
+    next->exec();
+}
+void WarGame::resume_stage()
+{
+    if (next)
+    {
+        next->close();
+        delete next;
+        next = nullptr;
+    }
+    stage->continueGame();
 }
 void WarGame::quit_to_main()
 {
     if (stage)
     {
+        stage->close();
         delete stage;
         stage = nullptr;
     }
@@ -103,8 +131,9 @@ void WarGame::quit_to_main()
         delete next;
         next = nullptr;
     }
+
     ui->startButton->setVisible(true);
-    ui->levelsButton->setVisible(true);
+//    ui->levelsButton->setVisible(true);
     ui->settingsButton->setVisible(true);
     ui->helpButton->setVisible(true);
     ui->exitButton->setVisible(true);
@@ -175,6 +204,7 @@ void WarGame::initCityStage()
     stage = new GameModel(this, cityBG, 4000);
     connect(stage, SIGNAL(win()), this, SLOT(win_stage()));
     connect(stage, SIGNAL(defeat()), this, SLOT(defeat_stage()));
+    connect(stage, SIGNAL(pause()), this, SLOT(pause_stage()));
     stage->prepareGame();
 
     for (int i = 0; i < 5; i++)
@@ -188,11 +218,11 @@ void WarGame::initBridgeStage()
 {
     current_stage = 2;
 
-
     QPixmap cityBG = QPixmap(":/image/levelBackground/res/image/level_bridge.jpg").scaled(this->size());
     stage = new GameModel(this, cityBG, 4000);
     connect(stage, SIGNAL(win()), this, SLOT(win_stage()));
     connect(stage, SIGNAL(defeat()), this, SLOT(defeat_stage()));
+    connect(stage, SIGNAL(pause()), this, SLOT(pause_stage()));
     stage->prepareGame();
 
     for (int i = 0; i < 1; i++)
@@ -208,11 +238,11 @@ void WarGame::initForestStage()
 {
     current_stage = 3;
 
-
     QPixmap cityBG = QPixmap(":/image/levelBackground/res/image/level_forest.jpg").scaled(this->size());
     stage = new GameModel(this, cityBG, 4000);
     connect(stage, SIGNAL(win()), this, SLOT(win_stage()));
     connect(stage, SIGNAL(defeat()), this, SLOT(defeat_stage()));
+    connect(stage, SIGNAL(pause()), this, SLOT(pause_stage()));
     stage->prepareGame();
 
     for (int i = 0; i < 2; i++)
@@ -231,6 +261,7 @@ void WarGame::initGrassStage()
     stage = new GameModel(this, cityBG, 4000);
     connect(stage, SIGNAL(win()), this, SLOT(win_stage()));
     connect(stage, SIGNAL(defeat()), this, SLOT(defeat_stage()));
+    connect(stage, SIGNAL(pause()), this, SLOT(pause_stage()));
     stage->prepareGame();
 
     for (int i = 0; i < 2; i++)
@@ -248,12 +279,13 @@ void WarGame::initIceStage()
     stage = new GameModel(this, cityBG, 4000);
     connect(stage, SIGNAL(win()), this, SLOT(win_stage()));
     connect(stage, SIGNAL(defeat()), this, SLOT(defeat_stage()));
+    connect(stage, SIGNAL(pause()), this, SLOT(pause_stage()));
     stage->prepareGame();
 
     for (int i = 0; i < 2; i++)
         stage->addPikachu(stage->Blue, 100 + 100 * i, 400 + 100 * i);
     for (int i = 0; i < 2; i++)
-        stage->addSquirtle(stage->Red, 900 + 100 * i, 400 + 100 * i);
+        stage->addCharmander(stage->Red, 900 + 100 * i, 400 + 100 * i);
     stage->prepareGame();
     stage->startGame();
 }
@@ -265,6 +297,7 @@ void WarGame::initSnowStage()
     stage = new GameModel(this, cityBG, 4000);
     connect(stage, SIGNAL(win()), this, SLOT(win_stage()));
     connect(stage, SIGNAL(defeat()), this, SLOT(defeat_stage()));
+    connect(stage, SIGNAL(pause()), this, SLOT(pause_stage()));
     stage->prepareGame();
 
     for (int i = 0; i < 2; i++)

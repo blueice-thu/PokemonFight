@@ -69,4 +69,9 @@
         <file>res/image/otherButton/restartButton2.png</file>
         <file>res/image/otherButton/restartButton3.png</file>
     </qresource>
+    <qresource prefix="/image">
+        <file>res/image/Defeat.png</file>
+        <file>res/image/Win.png</file>
+        <file>res/image/Pause.png</file>
+    </qresource>
 </RCC>
