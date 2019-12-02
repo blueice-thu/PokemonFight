@@ -2,6 +2,7 @@
 #define POKEMON_H
 
 #include <QString>
+#include <QWidget>
 #include <QMovie>
 #include <QLabel>
 #include <QGraphicsItem>
@@ -10,9 +11,11 @@
 #include <QMimeData>
 #include <QDrag>
 #include <QPainter>
+#include <QGraphicsView>
 #include <QGraphicsItemAnimation>
 #include <math.h>
 #include <QDebug>
+#include <QPainter>
 
 enum UnitState { STOP, MOVE, ATTACK };
 enum SideType { RedSide, BlueSide };
@@ -31,19 +34,19 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QRectF boundingRect() const;
     QPainterPath shape() const;
-//    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
     void moveTo(qreal x, qreal y);
     void moveTo(QPointF point);
     void stop();
     void setState(UnitState newState);
-    UnitState getState();
 
     int getHp();
-    void cutHp(int cut);
     int getAttackAbility();
+    UnitState getState();
+    void cutHp(int cut);
 
-private:
+protected:
     int pWidth, pHeight;
     QString name;
     QPainter* painter;
@@ -59,7 +62,16 @@ private:
 
     Direction direct;
     UnitState state;
-
 };
-
+/*
+class Pikachu : public Pokemon
+{
+    Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
+public:
+    explicit Pikachu(QWidget *parent = nullptr);
+    Pikachu(SideType newSide, QGraphicsView* view);
+//    ~Pikachu();
+};
+*/
 #endif // POKEMON_H

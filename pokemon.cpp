@@ -11,11 +11,11 @@ Pokemon::Pokemon(SideType newSide, QString newName, QPainter* newPainter,  QMovi
     if (side == BlueSide)
     {
         direct = RIGHT;
+        setFlag(ItemIsMovable, false);
     }
     else
     {
         direct = LEFT;
-        setFlags(QGraphicsItem::ItemIsMovable);
     }
 
     painter = newPainter;
@@ -99,21 +99,21 @@ void Pokemon::stop()
 {
     state = STOP;
 }
-//QVariant Pokemon::itemChange(GraphicsItemChange change, const QVariant &value)
-//{
-//    if (change == ItemPositionChange && scene()) {
-//        // value is the new position.
-//        QPointF newPos = value.toPointF();
-//        QRectF rect = scene()->sceneRect();
-//        if (!rect.contains(newPos)) {
-//            // Keep the item inside the scene rect.
-//            newPos.setX(qMin(rect.right(), qMax(newPos.x(), rect.left())));
-//            newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
-//            return newPos;
-//        }
-//    }
-//    return QGraphicsItem::itemChange(change, value);
-//}
+QVariant Pokemon::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+    if (change == ItemPositionChange && scene()) {
+        // value is the new position.
+        QPointF newPos = value.toPointF();
+        QRectF rect(50, 300, 1230, 600);
+        if (!rect.contains(newPos)) {
+            // Keep the item inside the scene rect.
+            newPos.setX(qMin(rect.right(), qMax(newPos.x(), rect.left())));
+            newPos.setY(qMin(rect.bottom(), qMax(newPos.y(), rect.top())));
+            return newPos;
+        }
+    }
+    return QGraphicsItem::itemChange(change, value);
+}
 void Pokemon::setState(UnitState newState)
 {
     state = newState;
@@ -130,3 +130,36 @@ int Pokemon::getAttackAbility()
 {
     return attackAbility;
 }
+/*
+Pikachu::Pikachu(SideType newSide, QGraphicsView* view)
+{
+    setFlags(QGraphicsItem::ItemSendsGeometryChanges);
+
+    side = newSide;
+    if (side == BlueSide)
+    {
+        direct = RIGHT;
+        setFlag(ItemIsMovable, false);
+    }
+    else
+    {
+        direct = LEFT;
+        setFlag(ItemIsMovable, true);
+    }
+
+    side = newSide;
+    name = "Pikachu";
+    painter = new QPainter(view);
+    model = new QMovie(":/pokemon/res/pokemon/pikachu.gif");
+    speed = 0.5 / 10.0;
+    pWidth = 60;
+    pHeight = 60;
+    HP = 120;
+    abilityPoint = 250;
+    attackAbility = 25;
+    attackSpeed = 5;
+    attackDistance = 30;
+
+    model->start();
+}
+*/

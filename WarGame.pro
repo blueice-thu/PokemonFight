@@ -36,13 +36,14 @@ HEADERS += \
         gamemodel.h \
         nextlevel.h \
         pokemon.h \
+        pokemonability.h \
         wargame.h
 
 FORMS += \
+        gamemodel.ui \
         help.ui \
         maingame.ui \
         nextlevel.ui \
-        pause.ui \
         wargame.ui
 
 # Default rules for deployment.

@@ -74,4 +74,20 @@
         <file>res/image/Win.png</file>
         <file>res/image/Pause.png</file>
     </qresource>
+    <qresource prefix="/image/preparePage">
+        <file>res/image/preparePage/minus.png</file>
+        <file>res/image/preparePage/minus2.png</file>
+        <file>res/image/preparePage/minus3.png</file>
+        <file>res/image/preparePage/playButton.png</file>
+        <file>res/image/preparePage/playButton2.png</file>
+        <file>res/image/preparePage/playButton3.png</file>
+        <file>res/image/preparePage/plusButton.png</file>
+        <file>res/image/preparePage/plusButton2.png</file>
+        <file>res/image/preparePage/plusButton3.png</file>
+        <file>res/image/preparePage/prepareBG.png</file>
+        <file>res/image/preparePage/reselectButton.png</file>
+        <file>res/image/preparePage/reselectButton2.png</file>
+        <file>res/image/preparePage/reselectButton3.png</file>
+        <file>res/image/preparePage/point.png</file>
+    </qresource>
 </RCC>

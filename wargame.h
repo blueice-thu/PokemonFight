@@ -22,15 +22,14 @@ public:
     explicit WarGame(QWidget *parent = nullptr);
     void closeEvent(QCloseEvent *event);
     ~WarGame();
+    void initUi();
     void initCityStage();
     void initBridgeStage();
     void initForestStage();
     void initGrassStage();
     void initIceStage();
     void initSnowStage();
-
-private slots:
-    void on_startButton_clicked();
+public slots:
     void win_stage();
     void defeat_stage();
     void restart_stage();
@@ -38,6 +37,11 @@ private slots:
     void pause_stage();
     void resume_stage();
     void quit_to_main();
+
+private slots:
+    void on_startButton_clicked();
+    void on_helpButton_clicked();
+
 
 private:
     Ui::WarGame *ui;

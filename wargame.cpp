@@ -18,6 +18,13 @@ WarGame::WarGame(QWidget *parent) :
     palette.setBrush(backgroundRole(), QBrush(pixmap));
     setPalette(palette);
 
+    initUi();
+
+    stage = nullptr;
+    next = nullptr;
+}
+void WarGame::initUi()
+{
     ui->startButton->setStyleSheet("QPushButton{border-image: url(:/image/startPage/res/image/startPage/startButton.png);}"
                                   "QPushButton:hover{border-image: url(:/image/startPage/res/image/startPage/startButton2.png);}"
                                   "QPushButton:pressed{border-image: url(:/image/startPage/res/image/startPage/startButton3.png);}");
@@ -34,11 +41,7 @@ WarGame::WarGame(QWidget *parent) :
     ui->exitButton->setStyleSheet("QPushButton{border-image: url(:/image/startPage/res/image/startPage/exitButton.png);}"
                                   "QPushButton:hover{border-image: url(:/image/startPage/res/image/startPage/exitButton2.png);}"
                                   "QPushButton:pressed{border-image: url(:/image/startPage/res/image/startPage/exitButton3.png);}");
-
-    stage = nullptr;
-    next = nullptr;
 }
-
 WarGame::~WarGame()
 {
     delete ui;
@@ -72,6 +75,16 @@ void WarGame::on_startButton_clicked()
     ui->exitButton->setVisible(false);
 
     initCityStage();
+}
+void WarGame::on_helpButton_clicked()
+{
+    ui->startButton->setVisible(false);
+    ui->levelsButton->setVisible(false);
+    ui->settingsButton->setVisible(false);
+    ui->helpButton->setVisible(false);
+    ui->exitButton->setVisible(false);
+
+    // TODO
 }
 void WarGame::win_stage()
 {
@@ -119,6 +132,8 @@ void WarGame::resume_stage()
 }
 void WarGame::quit_to_main()
 {
+    ui->setupUi(this);
+    initUi();
     if (stage)
     {
         stage->close();
@@ -205,14 +220,9 @@ void WarGame::initCityStage()
     connect(stage, SIGNAL(win()), this, SLOT(win_stage()));
     connect(stage, SIGNAL(defeat()), this, SLOT(defeat_stage()));
     connect(stage, SIGNAL(pause()), this, SLOT(pause_stage()));
-    stage->prepareGame();
 
     for (int i = 0; i < 5; i++)
         stage->addPikachu(stage->Blue, 100 + 100 * i, 400 + 100 * i);
-    for (int i = 0; i < 2; i++)
-        stage->addSquirtle(stage->Red, 900 + 100 * i, 400 + 100 * i);
-    stage->prepareGame();
-    stage->startGame();
 }
 void WarGame::initBridgeStage()
 {
@@ -223,16 +233,10 @@ void WarGame::initBridgeStage()
     connect(stage, SIGNAL(win()), this, SLOT(win_stage()));
     connect(stage, SIGNAL(defeat()), this, SLOT(defeat_stage()));
     connect(stage, SIGNAL(pause()), this, SLOT(pause_stage()));
-    stage->prepareGame();
 
     for (int i = 0; i < 1; i++)
         for (int j = 0; j < 2; j++)
-            stage->addPikachu(stage->Blue, 100 + 100 * i, 400 + 100 * j);
-    for (int i = 0; i < 2; i++)
-        for (int j = 0; j < 2; j++)
-            stage->addSquirtle(stage->Red, 900 + 100 * i, 400 + 100 * j);
-    stage->prepareGame();
-    stage->startGame();
+            stage->addOnix(stage->Blue, 100 + 100 * i, 400 + 100 * j);
 }
 void WarGame::initForestStage()
 {
@@ -247,10 +251,6 @@ void WarGame::initForestStage()
 
     for (int i = 0; i < 2; i++)
         stage->addPikachu(stage->Blue, 100 + 100 * i, 400 + 100 * i);
-    for (int i = 0; i < 2; i++)
-        stage->addSquirtle(stage->Red, 900 + 100 * i, 400 + 100 * i);
-    stage->prepareGame();
-    stage->startGame();
 }
 void WarGame::initGrassStage()
 {
@@ -266,10 +266,6 @@ void WarGame::initGrassStage()
 
     for (int i = 0; i < 2; i++)
         stage->addPikachu(stage->Blue, 100 + 100 * i, 400 + 100 * i);
-    for (int i = 0; i < 2; i++)
-        stage->addSquirtle(stage->Red, 900 + 100 * i, 400 + 100 * i);
-    stage->prepareGame();
-    stage->startGame();
 }
 void WarGame::initIceStage()
 {
@@ -284,10 +280,6 @@ void WarGame::initIceStage()
 
     for (int i = 0; i < 2; i++)
         stage->addPikachu(stage->Blue, 100 + 100 * i, 400 + 100 * i);
-    for (int i = 0; i < 2; i++)
-        stage->addCharmander(stage->Red, 900 + 100 * i, 400 + 100 * i);
-    stage->prepareGame();
-    stage->startGame();
 }
 void WarGame::initSnowStage()
 {
@@ -302,8 +294,4 @@ void WarGame::initSnowStage()
 
     for (int i = 0; i < 2; i++)
         stage->addPikachu(stage->Blue, 100 + 100 * i, 400 + 100 * i);
-    for (int i = 0; i < 2; i++)
-        stage->addSquirtle(stage->Red, 900 + 100 * i, 400 + 100 * i);
-    stage->prepareGame();
-    stage->startGame();
 }
