@@ -28,7 +28,7 @@ Pokemon::Pokemon(SideType newSide, QString newName, QPainter* newPainter,  QMovi
     HP = maxHP;
     speed = newSpeed / 10.0;
     abilityPoint = newAbilityPoint;
-    attackAbility = newAttackAbility;
+    attackAbility = newAttackAbility / 3;
     attackSpeed = newAttackSpeed;
     attackDistance = newAttackDistance;
 

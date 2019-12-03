@@ -31,124 +31,124 @@
 ******攻速：暂时无法实现攻速机制，所以可以先不用管
 ******攻击距离：以40为近战距离
 */
-#define SpeedofBulbasaur            0.5
-#define MaxHPofBulbasaur            50
-#define AbilityPointofBulbasaur		200
-#define AttackAbilityofBulbasaur	30
+#define SpeedofBulbasaur            1.0
+#define MaxHPofBulbasaur            90
+#define AbilityPointofBulbasaur		220
+#define AttackAbilityofBulbasaur	7
 #define AttackSpeedofBulbasaur		4
-#define AttackDistanceofBulbasaur	60
+#define AttackDistanceofBulbasaur   70
 
-#define SpeedofCharmander            0.5
-#define MaxHPofCharmander            50
-#define AbilityPointofCharmander     200
-#define AttackAbilityofCharmander    30
+#define SpeedofCharmander            1.0
+#define MaxHPofCharmander            95
+#define AbilityPointofCharmander     230
+#define AttackAbilityofCharmander    8
 #define AttackSpeedofCharmander      4
-#define AttackDistanceofCharmander   60
+#define AttackDistanceofCharmander   80
 
-#define SpeedofHeracross            0.5
-#define MaxHPofHeracross            50
-#define AbilityPointofHeracross     200
-#define AttackAbilityofHeracross    30
+#define SpeedofHeracross            0.7
+#define MaxHPofHeracross            130
+#define AbilityPointofHeracross     300
+#define AttackAbilityofHeracross    13
 #define AttackSpeedofHeracross      4
-#define AttackDistanceofHeracross   60
+#define AttackDistanceofHeracross   40
 
-#define SpeedofJigglypuff            0.5
-#define MaxHPofJigglypuff            50
+#define SpeedofJigglypuff            1.0
+#define MaxHPofJigglypuff            90
 #define AbilityPointofJigglypuff     200
-#define AttackAbilityofJigglypuff    30
+#define AttackAbilityofJigglypuff    6
 #define AttackSpeedofJigglypuff      4
-#define AttackDistanceofJigglypuff   60
+#define AttackDistanceofJigglypuff   110
 
-#define SpeedofJirachi            0.5
-#define MaxHPofJirachi            50
-#define AbilityPointofJirachi     200
-#define AttackAbilityofJirachi    30
+#define SpeedofJirachi            1.1
+#define MaxHPofJirachi            200
+#define AbilityPointofJirachi     450
+#define AttackAbilityofJirachi    19
 #define AttackSpeedofJirachi      4
-#define AttackDistanceofJirachi   60
+#define AttackDistanceofJirachi   140
 
-#define SpeedofLugia            0.5
-#define MaxHPofLugia            50
-#define AbilityPointofLugia     200
-#define AttackAbilityofLugia    30
+#define SpeedofLugia            0.9
+#define MaxHPofLugia            210
+#define AbilityPointofLugia     450
+#define AttackAbilityofLugia    18
 #define AttackSpeedofLugia      4
-#define AttackDistanceofLugia   60
+#define AttackDistanceofLugia   140
 
 #define SpeedofLuxio            0.5
-#define MaxHPofLuxio            50
-#define AbilityPointofLuxio     200
-#define AttackAbilityofLuxio    30
+#define MaxHPofLuxio            140
+#define AbilityPointofLuxio     320
+#define AttackAbilityofLuxio    14
 #define AttackSpeedofLuxio      4
-#define AttackDistanceofLuxio   60
+#define AttackDistanceofLuxio   70
 
-#define SpeedofMachop            0.5
-#define MaxHPofMachop            50
-#define AbilityPointofMachop     200
-#define AttackAbilityofMachop    30
+#define SpeedofMachop            1.0
+#define MaxHPofMachop            90
+#define AbilityPointofMachop     230
+#define AttackAbilityofMachop    8
 #define AttackSpeedofMachop      4
-#define AttackDistanceofMachop   60
+#define AttackDistanceofMachop   100
 
-#define SpeedofMeowth            0.5
-#define MaxHPofMeowth            50
-#define AbilityPointofMeowth     200
-#define AttackAbilityofMeowth    30
+#define SpeedofMeowth            1.1
+#define MaxHPofMeowth            100
+#define AbilityPointofMeowth     220
+#define AttackAbilityofMeowth    6
 #define AttackSpeedofMeowth      4
-#define AttackDistanceofMeowth   60
+#define AttackDistanceofMeowth   100
 
 #define SpeedofOnix            0.5
-#define MaxHPofOnix            50
-#define AbilityPointofOnix     200
-#define AttackAbilityofOnix    30
+#define MaxHPofOnix            180
+#define AbilityPointofOnix     360
+#define AttackAbilityofOnix    16
 #define AttackSpeedofOnix      4
-#define AttackDistanceofOnix   60
+#define AttackDistanceofOnix   50
 
 #define SpeedofPangoro            0.5
-#define MaxHPofPangoro            50
-#define AbilityPointofPangoro     200
-#define AttackAbilityofPangoro    30
+#define MaxHPofPangoro            190
+#define AbilityPointofPangoro     380
+#define AttackAbilityofPangoro    17
 #define AttackSpeedofPangoro      4
-#define AttackDistanceofPangoro   60
+#define AttackDistanceofPangoro   70
 
-#define SpeedofPikachu            0.5
-#define MaxHPofPikachu            50
-#define AbilityPointofPikachu     200
-#define AttackAbilityofPikachu    30
+#define SpeedofPikachu            1.0
+#define MaxHPofPikachu            110
+#define AbilityPointofPikachu     230
+#define AttackAbilityofPikachu    6
 #define AttackSpeedofPikachu      4
-#define AttackDistanceofPikachu   60
+#define AttackDistanceofPikachu   80
 
 #define SpeedofPolitoed            0.5
-#define MaxHPofPolitoed            50
-#define AbilityPointofPolitoed     200
-#define AttackAbilityofPolitoed    30
+#define MaxHPofPolitoed            150
+#define AbilityPointofPolitoed     290
+#define AttackAbilityofPolitoed    11
 #define AttackSpeedofPolitoed      4
-#define AttackDistanceofPolitoed   60
+#define AttackDistanceofPolitoed   100
 
-#define SpeedofPsyduck            0.5
-#define MaxHPofPsyduck            50
-#define AbilityPointofPsyduck     200
-#define AttackAbilityofPsyduck    30
+#define SpeedofPsyduck            1.1
+#define MaxHPofPsyduck            90
+#define AbilityPointofPsyduck     180
+#define AttackAbilityofPsyduck    5
 #define AttackSpeedofPsyduck      4
-#define AttackDistanceofPsyduck   60
+#define AttackDistanceofPsyduck   45
 
-#define SpeedofRaikou            0.5
-#define MaxHPofRaikou            50
-#define AbilityPointofRaikou     200
-#define AttackAbilityofRaikou    30
+#define SpeedofRaikou            0.8
+#define MaxHPofRaikou            160
+#define AbilityPointofRaikou     320
+#define AttackAbilityofRaikou    14
 #define AttackSpeedofRaikou      4
-#define AttackDistanceofRaikou   60
+#define AttackDistanceofRaikou   75
 
-#define SpeedofSquirtle            0.5
-#define MaxHPofSquirtle            50
-#define AbilityPointofSquirtle     200
-#define AttackAbilityofSquirtle    30
+#define SpeedofSquirtle            1.0
+#define MaxHPofSquirtle            80
+#define AbilityPointofSquirtle     240
+#define AttackAbilityofSquirtle    7
 #define AttackSpeedofSquirtle      4
-#define AttackDistanceofSquirtle   60
+#define AttackDistanceofSquirtle   110
 
-#define SpeedofZweilous            0.5
-#define MaxHPofZweilous            50
-#define AbilityPointofZweilous     200
-#define AttackAbilityofZweilous    30
+#define SpeedofZweilous            0.7
+#define MaxHPofZweilous            150
+#define AbilityPointofZweilous     320
+#define AttackAbilityofZweilous    12
 #define AttackSpeedofZweilous      4
-#define AttackDistanceofZweilous   60
+#define AttackDistanceofZweilous   80
 
 
 #endif // POKEMONABILITY_H
