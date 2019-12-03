@@ -20,6 +20,17 @@
 #define IDofSquirtle    15
 #define IDofZweilous    16
 
+/*下方是需要修改的部分
+**只需要修改数字
+**格式为：“属性of宝可梦”
+**每个宝可梦六个属性，依次是：
+******移速:0.5为基本但偏慢的速度，建议以0.3为下限
+******最大生命值：所给默认值略低，建议以70为下限
+******价格（AbilityPoint）：200属于最基本的兵种，建议150为下限
+******攻击力：所给的默认值偏高，建议范围为5~20
+******攻速：暂时无法实现攻速机制，所以可以先不用管
+******攻击距离：以40为近战距离
+*/
 #define SpeedofBulbasaur            0.5
 #define MaxHPofBulbasaur            50
 #define AbilityPointofBulbasaur		200
@@ -48,12 +59,12 @@
 #define AttackSpeedofJigglypuff      4
 #define AttackDistanceofJigglypuff   60
 
-#define Speedofjirachi            0.5
-#define MaxHPofjirachi            50
-#define AbilityPointofjirachi     200
-#define AttackAbilityofjirachi    30
-#define AttackSpeedofjirachi      4
-#define AttackDistanceofjirachi   60
+#define SpeedofJirachi            0.5
+#define MaxHPofJirachi            50
+#define AbilityPointofJirachi     200
+#define AttackAbilityofJirachi    30
+#define AttackSpeedofJirachi      4
+#define AttackDistanceofJirachi   60
 
 #define SpeedofLugia            0.5
 #define MaxHPofLugia            50

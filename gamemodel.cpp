@@ -2,7 +2,7 @@
 #include "ui_gamemodel.h"
 
 GameModel::GameModel(QMainWindow* window, QPixmap& background, int maxPoint) :
-    status(PREPARE), ui(new Ui::GameModel)
+    status(SELECT), ui(new Ui::GameModel)
 {
     Red.live_pokemon = 0;
     Red.type = RedSide;
@@ -194,7 +194,6 @@ void GameModel::prepareGame()
         return;
     ui->centralwidget->hide();
     status = PREPARE;
-    qDebug() << Red.live_pokemon;
     for (size_t i = 0; i < Red.live_pokemon; i++)
     {
         Red.units[i]->setFlag(QGraphicsItem::ItemIsMovable, true);
@@ -288,12 +287,20 @@ void GameModel::keyPressEvent(QKeyEvent *event)
     if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_X)
     {
         // Make HP MAX!
-        size_t i = 0;
-        while (i < Red.live_pokemon)
+        if (status == PLAYING)
         {
-            if (Red.units[i]->getHp() < 1000000)
-                Red.units[i]->cutHp(-1000000);
-            i++;
+            size_t i = 0;
+            while (i < Red.live_pokemon)
+            {
+                if (Red.units[i]->getHp() < 1000000)
+                    Red.units[i]->cutHp(-1000000);
+                i++;
+            }
+        }
+        else if (status == SELECT)
+        {
+            totalAblityPoint = 1000000;
+            ui->point->setNum(totalAblityPoint);
         }
         QWidget::keyPressEvent(event);
         return;
@@ -303,6 +310,14 @@ void GameModel::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Escape:
             if (status == PLAYING)
                 emit pause();
+            break;
+        case Qt::Key_Enter:
+            if (status == PREPARE)
+                startGame();
+            break;
+        case Qt::Key_Return:
+            if (status == PREPARE)
+                startGame();
             break;
         default:
             QWidget::keyPressEvent(event);
@@ -599,9 +614,9 @@ void GameModel::addJirachi(Side &side, int x, int y)
 {
     QPainter* p = new QPainter(this);
     QMovie* pMovie = new QMovie(":/pokemon/res/pokemon/jirachi.gif");
-    Pokemon* jirachi = new Pokemon(side.type, "Squirtle", p, pMovie, Speedofjirachi, 92, 68, MaxHPofjirachi,
-                                   AbilityPointofjirachi, AttackAbilityofjirachi, AttackSpeedofjirachi,
-                                   AttackDistanceofjirachi);
+    Pokemon* jirachi = new Pokemon(side.type, "Squirtle", p, pMovie, SpeedofJirachi, 92, 68, MaxHPofJirachi,
+                                   AbilityPointofJirachi, AttackAbilityofJirachi, AttackSpeedofJirachi,
+                                   AttackDistanceofJirachi);
     side.units.push_back(jirachi);
     side.live_pokemon++;
 
@@ -762,155 +777,291 @@ void GameModel::addZweilous(Side &side, int x, int y)
 }
 void GameModel::on_addButton_0_clicked()
 {
+    if (totalAblityPoint < AbilityPointofBulbasaur)
+        return;
+    totalAblityPoint -= AbilityPointofBulbasaur;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_0->setNum(++numPokemon[0]);
 }
 void GameModel::on_addButton_1_clicked()
 {
+    if (totalAblityPoint < AbilityPointofCharmander)
+        return;
+    totalAblityPoint -= AbilityPointofCharmander;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_1->setNum(++numPokemon[1]);
 }
 void GameModel::on_addButton_2_clicked()
 {
+    if (totalAblityPoint < AbilityPointofHeracross)
+        return;
+    totalAblityPoint -= AbilityPointofHeracross;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_2->setNum(++numPokemon[2]);
 }
 void GameModel::on_addButton_3_clicked()
 {
+    if (totalAblityPoint < AbilityPointofJigglypuff)
+        return;
+    totalAblityPoint -= AbilityPointofJigglypuff;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_3->setNum(++numPokemon[3]);
 }
 void GameModel::on_addButton_4_clicked()
 {
+    if (totalAblityPoint < AbilityPointofJirachi)
+        return;
+    totalAblityPoint -= AbilityPointofJirachi;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_4->setNum(++numPokemon[4]);
 }
 void GameModel::on_addButton_5_clicked()
 {
+    if (totalAblityPoint < AbilityPointofLugia)
+        return;
+    totalAblityPoint -= AbilityPointofLugia;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_5->setNum(++numPokemon[5]);
 }
 void GameModel::on_addButton_6_clicked()
 {
+    if (totalAblityPoint < AbilityPointofLuxio)
+        return;
+    totalAblityPoint -= AbilityPointofLuxio;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_6->setNum(++numPokemon[6]);
 }
 void GameModel::on_addButton_7_clicked()
 {
+    if (totalAblityPoint < AbilityPointofMachop)
+        return;
+    totalAblityPoint -= AbilityPointofMachop;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_7->setNum(++numPokemon[7]);
 }
 void GameModel::on_addButton_8_clicked()
 {
+    if (totalAblityPoint < AbilityPointofMeowth)
+        return;
+    totalAblityPoint -= AbilityPointofMeowth;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_8->setNum(++numPokemon[8]);
 }
 void GameModel::on_addButton_9_clicked()
 {
+    if (totalAblityPoint < AbilityPointofOnix)
+        return;
+    totalAblityPoint -= AbilityPointofOnix;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_9->setNum(++numPokemon[9]);
 }
 void GameModel::on_addButton_10_clicked()
 {
+    if (totalAblityPoint < AbilityPointofPangoro)
+        return;
+    totalAblityPoint -= AbilityPointofPangoro;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_10->setNum(++numPokemon[10]);
 }
 void GameModel::on_addButton_11_clicked()
 {
+    if (totalAblityPoint < AbilityPointofPikachu)
+        return;
+    totalAblityPoint -= AbilityPointofPikachu;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_11->setNum(++numPokemon[11]);
 }
 void GameModel::on_addButton_12_clicked()
 {
+    if (totalAblityPoint < AbilityPointofPolitoed)
+        return;
+    totalAblityPoint -= AbilityPointofPolitoed;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_12->setNum(++numPokemon[12]);
 }
 void GameModel::on_addButton_13_clicked()
 {
+    if (totalAblityPoint < AbilityPointofPsyduck)
+        return;
+    totalAblityPoint -= AbilityPointofPsyduck;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_13->setNum(++numPokemon[13]);
 }
 void GameModel::on_addButton_14_clicked()
 {
+    if (totalAblityPoint < AbilityPointofRaikou)
+        return;
+    totalAblityPoint -= AbilityPointofRaikou;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_14->setNum(++numPokemon[14]);
 }
 void GameModel::on_addButton_15_clicked()
 {
+    if (totalAblityPoint < AbilityPointofSquirtle)
+        return;
+    totalAblityPoint -= AbilityPointofSquirtle;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_15->setNum(++numPokemon[15]);
 }
 void GameModel::on_addButton_16_clicked()
 {
+    if (totalAblityPoint < AbilityPointofZweilous)
+        return;
+    totalAblityPoint -= AbilityPointofZweilous;
+    ui->point->setNum(this->totalAblityPoint);
     ui->point_16->setNum(++numPokemon[16]);
 }
 
 void GameModel::on_minusButton_0_clicked()
 {
     if (ui->point_0->text().toInt() > 0)
+    {
         ui->point_0->setNum(--numPokemon[0]);
+        totalAblityPoint += AbilityPointofBulbasaur;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_1_clicked()
 {
     if (ui->point_1->text().toInt() > 0)
+    {
         ui->point_1->setNum(--numPokemon[1]);
+        totalAblityPoint += AbilityPointofCharmander;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_2_clicked()
 {
     if (ui->point_2->text().toInt() > 0)
+    {
         ui->point_2->setNum(--numPokemon[2]);
+        totalAblityPoint += AbilityPointofHeracross;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_3_clicked()
 {
     if (ui->point_3->text().toInt() > 0)
+    {
         ui->point_3->setNum(--numPokemon[3]);
+        totalAblityPoint += AbilityPointofJigglypuff;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_4_clicked()
 {
     if (ui->point_4->text().toInt() > 0)
+    {
         ui->point_4->setNum(--numPokemon[4]);
+        totalAblityPoint += AbilityPointofJirachi;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_5_clicked()
 {
     if (ui->point_5->text().toInt() > 0)
+    {
         ui->point_5->setNum(--numPokemon[5]);
+        totalAblityPoint += AbilityPointofLugia;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_6_clicked()
 {
     if (ui->point_6->text().toInt() > 0)
+    {
         ui->point_6->setNum(--numPokemon[6]);
+        totalAblityPoint += AbilityPointofLuxio;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_7_clicked()
 {
     if (ui->point_7->text().toInt() > 0)
+    {
         ui->point_7->setNum(--numPokemon[7]);
+        totalAblityPoint += AbilityPointofMachop;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_8_clicked()
 {
     if (ui->point_8->text().toInt() > 0)
+    {
         ui->point_8->setNum(--numPokemon[8]);
+        totalAblityPoint += AbilityPointofMeowth;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_9_clicked()
 {
     if (ui->point_9->text().toInt() > 0)
+    {
         ui->point_9->setNum(--numPokemon[9]);
+        totalAblityPoint += AbilityPointofOnix;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_10_clicked()
 {
     if (ui->point_10->text().toInt() > 0)
+    {
         ui->point_10->setNum(--numPokemon[10]);
+        totalAblityPoint += AbilityPointofPangoro;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_11_clicked()
 {
     if (ui->point_11->text().toInt() > 0)
+    {
         ui->point_11->setNum(--numPokemon[11]);
+        totalAblityPoint += AbilityPointofPikachu;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_12_clicked()
 {
     if (ui->point_12->text().toInt() > 0)
+    {
         ui->point_12->setNum(--numPokemon[12]);
+        totalAblityPoint += AbilityPointofPolitoed;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_13_clicked()
 {
     if (ui->point_13->text().toInt() > 0)
+    {
         ui->point_13->setNum(--numPokemon[13]);
+        totalAblityPoint += AbilityPointofPsyduck;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_14_clicked()
 {
     if (ui->point_14->text().toInt() > 0)
+    {
         ui->point_14->setNum(--numPokemon[14]);
+        totalAblityPoint += AbilityPointofRaikou;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_15_clicked()
 {
     if (ui->point_15->text().toInt() > 0)
+    {
         ui->point_15->setNum(--numPokemon[15]);
+        totalAblityPoint += AbilityPointofSquirtle;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }
 void GameModel::on_minusButton_16_clicked()
 {
     if (ui->point_16->text().toInt() > 0)
+    {
         ui->point_16->setNum(--numPokemon[16]);
+        totalAblityPoint += AbilityPointofZweilous;
+        ui->point->setNum(this->totalAblityPoint);
+    }
 }

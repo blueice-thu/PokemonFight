@@ -18,7 +18,7 @@
 namespace Ui {
 class GameModel;
 }
-enum GameStatus { PREPARE, PLAYING, PAUSE, WIN, DEFEAT };
+enum GameStatus { SELECT, PREPARE, PLAYING, PAUSE, WIN, DEFEAT };
 typedef struct Side
 {
     SideType type;
