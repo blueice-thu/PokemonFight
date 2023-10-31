@@ -10,8 +10,8 @@
 - 宝可梦自动寻敌和移动；
 - 动态宝可梦 GIF 绘制；
 - 宝可梦的购买和拖动；
-- 不同宝可梦的属性差异；
 - 多个战斗场景；
+- 不同宝可梦的属性差异；
 - 战斗结算。
 
 你可以通过 [Release](https://github.com/yorhaha/PokemonFight/releases) 亲自尝试。
